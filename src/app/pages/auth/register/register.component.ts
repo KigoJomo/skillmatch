@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
@@ -10,8 +10,7 @@ import {
 import { ButtonComponent } from '../../../shared/ui/button/button.component';
 import { InputComponent } from '../../../shared/ui/input/input.component';
 import { LogoComponent } from '../../../shared/ui/logo/logo.component';
-
-type UserRole = 'Job Seeker' | 'Employer/Recruiter';
+import { AuthService, UserRole } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -30,11 +29,26 @@ type UserRole = 'Job Seeker' | 'Employer/Recruiter';
 export class RegisterComponent {
   roles: UserRole[] = ['Job Seeker', 'Employer/Recruiter'];
   selectedRole: UserRole = 'Job Seeker';
-  registerForm: FormGroup;
+  registerForm!: FormGroup;
   isLoading = false;
   showTermsError = false;
+  error: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    // Redirect if already logged in
+    if (this.authService.currentUser) {
+      this.navigateAfterAuth();
+      return;
+    }
+
+    this.initForm();
+  }
+
+  private initForm() {
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
@@ -43,6 +57,13 @@ export class RegisterComponent {
       companyName: [''],
       acceptTerms: [false, [Validators.requiredTrue]],
     });
+
+    // Set initial company name validator based on selected role
+    if (this.selectedRole === 'Employer/Recruiter') {
+      this.registerForm
+        .get('companyName')
+        ?.setValidators([Validators.required]);
+    }
   }
 
   selectRole(role: UserRole) {
@@ -91,15 +112,31 @@ export class RegisterComponent {
     }
 
     this.isLoading = true;
+    this.error = null;
+
     try {
-      // TODO: Implement registration service call
-      console.log('Form submitted:', {
+      await this.authService.register({
         ...this.registerForm.value,
         role: this.selectedRole,
       });
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
+      await this.router.navigate(['/onboarding']);
+    } catch (err) {
+      this.error = 'Registration failed. Please try again.';
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  private async navigateAfterAuth() {
+    const user = this.authService.currentUser;
+    if (!user) return;
+
+    if (!user.hasCompletedOnboarding) {
+      await this.router.navigate(['/onboarding']);
+    } else if (user.role === 'Job Seeker') {
+      await this.router.navigate(['/dashboard/seeker']);
+    } else {
+      await this.router.navigate(['/dashboard/employer']);
     }
   }
 

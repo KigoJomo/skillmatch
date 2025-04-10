@@ -21,9 +21,9 @@ import { LogoComponent } from '../logo/logo.component';
           </div>
 
           <div class="flex flex-col gap-2">
-            <h3 class="font-semibold text-[var(--color-foreground)]">
+            <h5 class="font-bold">
               Company
-            </h3>
+            </h5>
             <a
               routerLink="/about"
               class="text-sm text-[var(--color-foreground-light)] hover:text-[var(--color-accent)]"
@@ -39,9 +39,9 @@ import { LogoComponent } from '../logo/logo.component';
           </div>
 
           <div class="flex flex-col gap-2">
-            <h3 class="font-semibold text-[var(--color-foreground)]">
+            <h5 class="font-bold">
               Resources
-            </h3>
+            </h5>
             <a
               routerLink="/blog"
               class="text-sm text-[var(--color-foreground-light)] hover:text-[var(--color-accent)]"
@@ -57,7 +57,7 @@ import { LogoComponent } from '../logo/logo.component';
           </div>
 
           <div class="flex flex-col gap-2">
-            <h3 class="font-semibold text-[var(--color-foreground)]">Legal</h3>
+            <h5 class="font-bold">Legal</h5>
             <a
               routerLink="/privacy"
               class="text-sm text-[var(--color-foreground-light)] hover:text-[var(--color-accent)]"
