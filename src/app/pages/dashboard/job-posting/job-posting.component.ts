@@ -60,7 +60,9 @@ interface JobPostingStep {
         </div>
 
         <!-- Step Content -->
-        <div class="bg-background-light/30 border border-foreground-light/20 rounded-xl p-6">
+        <div
+          class="bg-background-light/30 border border-foreground-light/20 rounded-xl p-6"
+        >
           <h3 class="text-lg font-medium mb-2">{{ currentStepData.title }}</h3>
           <p class="text-sm text-foreground-light mb-6">
             {{ currentStepData.description }}
@@ -112,17 +114,22 @@ interface JobPostingStep {
                     type="button"
                     variant="outline"
                     (click)="addSkill()"
-                  >Add</app-button>
+                    >Add</app-button
+                  >
                 </div>
                 <div class="flex flex-wrap gap-2">
                   @for (skill of skills; track skill) {
-                  <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-background-light/30 border border-foreground-light/30">
+                  <div
+                    class="flex items-center gap-2 px-3 py-1 rounded-full bg-background-light/30 border border-foreground-light/30"
+                  >
                     <span>{{ skill }}</span>
                     <button
                       type="button"
                       (click)="removeSkill(skill)"
                       class="text-foreground-light hover:text-foreground"
-                    >×</button>
+                    >
+                      ×
+                    </button>
                   </div>
                   }
                 </div>
@@ -178,57 +185,82 @@ interface JobPostingStep {
             <div class="space-y-6 animate-fade-in-up">
               <div class="space-y-4">
                 <div>
-                  <h4 class="text-sm font-medium text-foreground-light">Job Title</h4>
+                  <h4 class="text-sm font-medium text-foreground-light">
+                    Job Title
+                  </h4>
                   <p>{{ jobForm.get('title')?.value }}</p>
                 </div>
                 <div>
-                  <h4 class="text-sm font-medium text-foreground-light">Description</h4>
+                  <h4 class="text-sm font-medium text-foreground-light">
+                    Description
+                  </h4>
                   <p>{{ jobForm.get('description')?.value }}</p>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                   <div>
-                    <h4 class="text-sm font-medium text-foreground-light">Department</h4>
+                    <h4 class="text-sm font-medium text-foreground-light">
+                      Department
+                    </h4>
                     <p>{{ jobForm.get('department')?.value }}</p>
                   </div>
                   <div>
-                    <h4 class="text-sm font-medium text-foreground-light">Location</h4>
+                    <h4 class="text-sm font-medium text-foreground-light">
+                      Location
+                    </h4>
                     <p>{{ jobForm.get('location')?.value }}</p>
                   </div>
                 </div>
                 <div>
-                  <h4 class="text-sm font-medium text-foreground-light">Required Skills</h4>
+                  <h4 class="text-sm font-medium text-foreground-light">
+                    Required Skills
+                  </h4>
                   <div class="flex flex-wrap gap-2 mt-1">
                     @for (skill of skills; track skill) {
-                    <span class="px-2 py-1 rounded-full bg-background-light text-xs">{{ skill }}</span>
+                    <span
+                      class="px-2 py-1 rounded-full bg-background-light text-xs"
+                      >{{ skill }}</span
+                    >
                     }
                   </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                   <div>
-                    <h4 class="text-sm font-medium text-foreground-light">Experience</h4>
+                    <h4 class="text-sm font-medium text-foreground-light">
+                      Experience
+                    </h4>
                     <p>{{ jobForm.get('experience')?.value }}</p>
                   </div>
                   <div>
-                    <h4 class="text-sm font-medium text-foreground-light">Education</h4>
+                    <h4 class="text-sm font-medium text-foreground-light">
+                      Education
+                    </h4>
                     <p>{{ jobForm.get('education')?.value }}</p>
                   </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                   <div>
-                    <h4 class="text-sm font-medium text-foreground-light">Employment Type</h4>
+                    <h4 class="text-sm font-medium text-foreground-light">
+                      Employment Type
+                    </h4>
                     <p>{{ jobForm.get('employmentType')?.value }}</p>
                   </div>
                   <div>
-                    <h4 class="text-sm font-medium text-foreground-light">Salary Range</h4>
+                    <h4 class="text-sm font-medium text-foreground-light">
+                      Salary Range
+                    </h4>
                     <p>{{ jobForm.get('salaryRange')?.value }}</p>
                   </div>
                 </div>
                 <div>
-                  <h4 class="text-sm font-medium text-foreground-light">Benefits</h4>
+                  <h4 class="text-sm font-medium text-foreground-light">
+                    Benefits
+                  </h4>
                   <p>{{ jobForm.get('benefits')?.value }}</p>
                 </div>
                 <div>
-                  <h4 class="text-sm font-medium text-foreground-light">Working Hours</h4>
+                  <h4 class="text-sm font-medium text-foreground-light">
+                    Working Hours
+                  </h4>
                   <p>{{ jobForm.get('workingHours')?.value }}</p>
                 </div>
               </div>
@@ -238,13 +270,21 @@ interface JobPostingStep {
             <!-- Navigation Buttons -->
             <div class="flex justify-between mt-8">
               @if (currentStep > 1) {
-              <app-button type="button" variant="outline" (click)="previousStep()">
+              <app-button
+                type="button"
+                variant="outline"
+                (click)="previousStep()"
+              >
                 Back
               </app-button>
               } @else {
               <div></div>
               }
-              <app-button type="submit" variant="primary" [loading]="isSubmitting">
+              <app-button
+                type="submit"
+                variant="primary"
+                [loading]="isSubmitting"
+              >
                 {{ currentStep === totalSteps ? 'Post Job' : 'Next' }}
               </app-button>
             </div>
@@ -316,7 +356,9 @@ export class JobPostingComponent {
       return `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
     }
     if (control.errors['minlength']) {
-      return `${field.charAt(0).toUpperCase() + field.slice(1)} must be at least ${
+      return `${
+        field.charAt(0).toUpperCase() + field.slice(1)
+      } must be at least ${
         control.errors['minlength'].requiredLength
       } characters`;
     }
@@ -356,7 +398,8 @@ export class JobPostingComponent {
 
     if (this.currentStep === 2 && this.skills.length === 0) {
       isValid = false;
-      // TODO: Show error message for skills
+      alert('Please add at least one required skill');
+      return;
     }
 
     if (!isValid) return;
@@ -390,11 +433,32 @@ export class JobPostingComponent {
       const jobData = {
         ...this.jobForm.value,
         skills: this.skills,
+        status: 'active',
+        postedDate: new Date().toISOString(),
       };
-      // TODO: Implement job posting submission
-      console.log('Submitting job posting:', jobData);
-    } finally {
+
+      // Simulate API call
+      await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (Math.random() > 0.2) {
+            // 80% success rate
+            resolve(true);
+          } else {
+            reject(new Error('Failed to post job. Please try again.'));
+          }
+        }, 1500);
+      });
+
+      // Show success message and redirect
+      alert('Job posted successfully!');
+      // TODO: Use router to navigate to jobs list
+      // this.router.navigate(['/dashboard/jobs']);
+    } catch (error) {
+      alert(
+        error instanceof Error ? error.message : 'An unexpected error occurred'
+      );
       this.isSubmitting = false;
+      return;
     }
   }
 }

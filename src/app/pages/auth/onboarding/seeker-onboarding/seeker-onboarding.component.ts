@@ -5,7 +5,6 @@ import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { ButtonComponent } from '../../../../shared/ui/button/button.component';
 import { InputComponent } from '../../../../shared/ui/input/input.component';
@@ -320,11 +319,11 @@ export class SeekerOnboardingComponent {
 
   private initForm() {
     this.onboardingForm = this.fb.group({
-      phone: ['', [Validators.required]],
-      location: ['', [Validators.required]],
-      bio: ['', [Validators.required, Validators.minLength(50)]],
-      salaryExpectation: ['', [Validators.required]],
-      preferredLocation: ['', [Validators.required]],
+      phone: [''],
+      location: [''],
+      bio: [''],
+      salaryExpectation: [''],
+      preferredLocation: [''],
     });
   }
 
@@ -335,58 +334,11 @@ export class SeekerOnboardingComponent {
   }
 
   getErrorMessage(field: string): string | undefined {
-    const control = this.onboardingForm.get(field);
-    if (!control?.errors || !control.touched) return undefined;
-
-    if (control.errors['required']) {
-      return `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
-    }
-    if (control.errors['minlength']) {
-      return `${
-        field.charAt(0).toUpperCase() + field.slice(1)
-      } must be at least ${
-        control.errors['minlength'].requiredLength
-      } characters`;
-    }
-
-    return undefined;
+    return undefined; // No validation in development
   }
 
   validateCurrentStep(): boolean {
-    const currentControls = this.getCurrentStepControls();
-    let isValid = true;
-
-    currentControls.forEach((controlName) => {
-      const control = this.onboardingForm.get(controlName);
-      if (control?.invalid) {
-        control.markAsTouched();
-        isValid = false;
-      }
-    });
-
-    if (this.currentStep === 2) {
-      if (this.skills.length === 0) {
-        isValid = false;
-      }
-      if (!this.selectedExperience) {
-        isValid = false;
-      }
-    }
-
-    return isValid;
-  }
-
-  getCurrentStepControls(): string[] {
-    switch (this.currentStep) {
-      case 1:
-        return ['phone', 'location', 'bio'];
-      case 2:
-        return []; // Skills and experience handled separately
-      case 3:
-        return ['salaryExpectation', 'preferredLocation'];
-      default:
-        return [];
-    }
+    return true; // No validation in development
   }
 
   previousStep() {
@@ -396,10 +348,6 @@ export class SeekerOnboardingComponent {
   }
 
   async nextStep() {
-    if (!this.validateCurrentStep()) {
-      return;
-    }
-
     if (this.currentStep < this.totalSteps) {
       this.currentStep++;
       return;

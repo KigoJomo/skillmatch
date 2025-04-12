@@ -58,7 +58,7 @@ import { DashboardLayoutComponent } from '../dashboard-layout/dashboard-layout.c
           <h4 class="text-lg mb-4">Quick Actions</h4>
           <div class="grid grid-cols-2 gap-4">
             <a
-              routerLink="/dashboard/profile"
+              routerLink="/dashboard/seeker/profile"
               class="p-4 rounded-lg bg-background-light/50 border border-foreground-light/20 text-left hover:border-[var(--color-accent)] transition-colors"
             >
               <h5 class="font-medium mb-1">Update Profile</h5>
@@ -67,21 +67,21 @@ import { DashboardLayoutComponent } from '../dashboard-layout/dashboard-layout.c
               </p>
             </a>
             <a
-              routerLink="/dashboard/cv-upload"
+              routerLink="/dashboard/seeker/cv"
               class="p-4 rounded-lg bg-background-light/50 border border-foreground-light/20 text-left hover:border-[var(--color-accent)] transition-colors"
             >
               <h5 class="font-medium mb-1">Upload CV</h5>
               <p class="text-xs text-foreground-light">Add or update your CV</p>
             </a>
             <a
-              routerLink="/dashboard/job-matches"
+              routerLink="/dashboard/seeker/matches"
               class="p-4 rounded-lg bg-background-light/50 border border-foreground-light/20 text-left hover:border-[var(--color-accent)] transition-colors"
             >
               <h5 class="font-medium mb-1">View Matches</h5>
               <p class="text-xs text-foreground-light">See your job matches</p>
             </a>
             <a
-              routerLink="/dashboard/career-guidance"
+              routerLink="/dashboard/seeker/career"
               class="p-4 rounded-lg bg-background-light/50 border border-foreground-light/20 text-left hover:border-[var(--color-accent)] transition-colors"
             >
               <h5 class="font-medium mb-1">Career Path</h5>

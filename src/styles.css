@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 
 @import "tailwindcss";
 
@@ -6,10 +6,20 @@
   --color-foreground: #fff;
   --color-foreground-light: #a6a6a6;
 
-  --color-background: #080F17;
+  --color-background: #080f17;
   --color-background-light: #171d30;
 
-  --color-accent: #A7EE43;
+  --color-accent: #a7ee43;
+}
+
+[data-theme="light"] {
+  --color-background: #fff;
+  --color-background-light: #a6a6a6;
+
+  --color-foreground: #080f17;
+  --color-foreground-light: #171d30;
+
+  --color-accent: #85ca23;
 }
 
 * {
@@ -52,15 +62,15 @@ strong {
   font-weight: medium;
 }
 
-input[type='checkbox']:checked{
-  accent-color: var(--color-accent)
+input[type="checkbox"]:checked {
+  accent-color: var(--color-accent);
 }
 
-input[type='checkbox']:not(:checked) {
+input[type="checkbox"]:not(:checked) {
   background-color: transparent;
 }
 
-img{
+img {
   object-fit: cover;
   object-position: center;
 }

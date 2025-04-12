@@ -5,7 +5,6 @@ import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { ButtonComponent } from '../../../../shared/ui/button/button.component';
 import { InputComponent } from '../../../../shared/ui/input/input.component';
@@ -306,13 +305,12 @@ export class RecruiterOnboardingComponent {
   totalSteps = 3;
   isLoading = false;
   isSkipping = false;
-
   onboardingForm!: FormGroup;
   skillInput = new FormControl('');
   skills: string[] = [];
-  companyLogoUrl: string | null = null;
-  selectedExperience: string | null = null;
+  selectedExperience = '';
   selectedJobTypes: string[] = [];
+  companyLogoUrl = '';
 
   steps: OnboardingStep[] = [
     {
@@ -328,13 +326,13 @@ export class RecruiterOnboardingComponent {
     {
       id: 3,
       title: 'Recruitment Preferences',
-      description: 'Set your hiring preferences and process',
+      description: 'Set your recruitment preferences',
     },
   ];
 
   experienceLevels = [
     'Entry Level (0-2 years)',
-    'Mid Level (3-5 years)',
+    'Mid Level (2-5 years)',
     'Senior Level (5-8 years)',
     'Expert Level (8+ years)',
   ];
@@ -346,26 +344,17 @@ export class RecruiterOnboardingComponent {
     private router: Router,
     public authService: AuthService
   ) {
-    if (!this.authService.currentUser) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    this.initForm();
-  }
-
-  private initForm() {
     this.onboardingForm = this.fb.group({
-      phone: ['', [Validators.required]],
-      location: ['', [Validators.required]],
-      description: ['', [Validators.required, Validators.minLength(50)]],
-      industry: ['', [Validators.required]],
-      companySize: ['', [Validators.required]],
-      website: ['', [Validators.required, Validators.pattern('https?://.*')]],
-      salaryRange: ['', [Validators.required]],
-      workLocations: ['', [Validators.required]],
-      interviewProcess: ['', [Validators.required]],
-      benefits: ['', [Validators.required]],
+      phone: [''],
+      location: [''],
+      description: [''],
+      industry: [''],
+      companySize: [''],
+      website: [''],
+      salaryRange: [''],
+      workLocations: [''],
+      interviewProcess: [''],
+      benefits: [''],
     });
   }
 
@@ -376,71 +365,11 @@ export class RecruiterOnboardingComponent {
   }
 
   getErrorMessage(field: string): string | undefined {
-    const control = this.onboardingForm.get(field);
-    if (!control?.errors || !control.touched) return undefined;
-
-    if (control.errors['required']) {
-      return `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
-    }
-    if (control.errors['minlength']) {
-      return `${
-        field.charAt(0).toUpperCase() + field.slice(1)
-      } must be at least ${
-        control.errors['minlength'].requiredLength
-      } characters`;
-    }
-    if (control.errors['pattern']) {
-      return `Please enter a valid website URL starting with http:// or https://`;
-    }
-
-    return undefined;
+    return undefined; // No validation in development
   }
 
   validateCurrentStep(): boolean {
-    const currentControls = this.getCurrentStepControls();
-    let isValid = true;
-
-    currentControls.forEach((controlName) => {
-      const control = this.onboardingForm.get(controlName);
-      if (control?.invalid) {
-        control.markAsTouched();
-        isValid = false;
-      }
-    });
-
-    if (this.currentStep === 2) {
-      if (this.skills.length === 0) {
-        isValid = false;
-      }
-      if (this.selectedJobTypes.length === 0) {
-        isValid = false;
-      }
-      if (!this.selectedExperience) {
-        isValid = false;
-      }
-    }
-
-    return isValid;
-  }
-
-  getCurrentStepControls(): string[] {
-    switch (this.currentStep) {
-      case 1:
-        return [
-          'phone',
-          'location',
-          'description',
-          'industry',
-          'companySize',
-          'website',
-        ];
-      case 2:
-        return []; // Skills and job types handled separately
-      case 3:
-        return ['salaryRange', 'workLocations', 'interviewProcess', 'benefits'];
-      default:
-        return [];
-    }
+    return true; // No validation in development
   }
 
   previousStep() {
@@ -450,10 +379,6 @@ export class RecruiterOnboardingComponent {
   }
 
   async nextStep() {
-    if (!this.validateCurrentStep()) {
-      return;
-    }
-
     if (this.currentStep < this.totalSteps) {
       this.currentStep++;
       return;
@@ -463,30 +388,11 @@ export class RecruiterOnboardingComponent {
   }
 
   async skipOnboarding() {
-    this.isSkipping = true;
-    try {
-      await this.authService.skipOnboarding();
-      await this.navigateToDashboard();
-    } finally {
-      this.isSkipping = false;
-    }
+    await this.navigateToDashboard();
   }
 
   private async completeOnboarding() {
-    this.isLoading = true;
-    try {
-      const onboardingData = {
-        ...this.onboardingForm.value,
-        skills: this.skills,
-        experienceLevel: this.selectedExperience,
-        jobTypes: this.selectedJobTypes,
-      };
-
-      await this.authService.completeOnboarding(onboardingData);
-      await this.navigateToDashboard();
-    } finally {
-      this.isLoading = false;
-    }
+    await this.navigateToDashboard();
   }
 
   private async navigateToDashboard() {
@@ -494,7 +400,6 @@ export class RecruiterOnboardingComponent {
   }
 
   uploadLogo() {
-    // TODO: Implement logo upload
     console.log('Upload company logo');
   }
 

@@ -38,7 +38,7 @@ type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'textarea';
         (blur)="onTouched()"
         [disabled]="disabled"
         [readonly]="readonly"
-        class="w-full px-4 py-2 rounded-md border bg-[var(--color-background-light)] border-[var(--color-foreground-light)]/20
+        class="w-full px-4 py-2 rounded-md border bg-background-light/20 border-[var(--color-foreground-light)]/20
                text-[var(--color-foreground)] placeholder-[var(--color-foreground-light)]/50
                focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]
                disabled:opacity-50 disabled:cursor-not-allowed
@@ -53,7 +53,7 @@ type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'textarea';
         (blur)="onTouched()"
         [disabled]="disabled"
         [readonly]="readonly"
-        class="w-full px-4 py-2 rounded-md border bg-[var(--color-background-light)] border-[var(--color-foreground-light)]/20
+        class="w-full px-4 py-2 rounded-md border bg-background-light/20 border-[var(--color-foreground-light)]/20
                text-[var(--color-foreground)] placeholder-[var(--color-foreground-light)]/50
                focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]
                disabled:opacity-50 disabled:cursor-not-allowed

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { ButtonComponent } from '../../shared/ui/button/button.component';
 
 interface FAQ {
@@ -11,7 +12,7 @@ interface FAQ {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ButtonComponent],
+  imports: [CommonModule, RouterModule, ButtonComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -116,26 +117,23 @@ export class HomeComponent {
       isOpen: false,
     },
     {
-      question: 'How can I contact support?',
+      question: 'What makes SkillMatch different?',
       answer:
-        'You can reach our support team 24/7 through our help desk portal, email at support@skillmatch.com, or live chat on our platform.',
+        'Our advanced AI matching system, real-time engagement features, and comprehensive career guidance tools set us apart from traditional job boards.',
       isOpen: false,
     },
     {
-      question: 'Can I update my skill profile?',
+      question: 'How can I get started?',
       answer:
-        'Yes, you can update your skill profile anytime. We recommend regular updates to ensure the most accurate matches.',
-      isOpen: false,
-    },
-    {
-      question: 'What are the benefits for employers?',
-      answer:
-        'Employers get access to pre-screened candidates matched by skills, reduced time-to-hire, advanced analytics, and integration with existing HR systems.',
+        'Simply create a free account, complete your profile, and start exploring matches. Our AI will continuously learn from your preferences to provide better recommendations.',
       isOpen: false,
     },
   ];
 
   toggleFaq(faq: FAQ) {
+    this.faqs.forEach((f) => {
+      if (f !== faq) f.isOpen = false;
+    });
     faq.isOpen = !faq.isOpen;
   }
 }

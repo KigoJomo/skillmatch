@@ -17,42 +17,37 @@ export interface User {
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  private currentUserSubject = new BehaviorSubject<User | null>(
+    this.getMockUser()
+  );
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor() {
-    // In a real app, we would check localStorage/sessionStorage and validate the token
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-      this.currentUserSubject.next(JSON.parse(savedUser));
-    }
+    // Always have a mock user for development
+    this.currentUserSubject.next(this.getMockUser());
   }
 
   get currentUser(): User | null {
-    return this.currentUserSubject.value;
+    return this.getMockUser();
   }
 
-  // Simulate login
-  async login(email: string, password: string): Promise<User> {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Mock user for demo
-    const user: User = {
+  private getMockUser(): User {
+    return {
       id: '1',
-      email,
-      firstName: 'John',
-      lastName: 'Doe',
+      email: 'dev@example.com',
+      firstName: 'Dev',
+      lastName: 'User',
       role: 'Job Seeker',
-      hasCompletedOnboarding: false,
+      hasCompletedOnboarding: true,
     };
-
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    this.currentUserSubject.next(user);
-    return user;
   }
 
-  // Simulate registration
+  // Simulate login - no validation needed for development
+  async login(email: string, password: string): Promise<User> {
+    return this.getMockUser();
+  }
+
+  // Simulate registration - no validation needed for development
   async register(data: {
     email: string;
     password: string;
@@ -61,45 +56,20 @@ export class AuthService {
     role: UserRole;
     companyName?: string;
   }): Promise<User> {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    const user: User = {
-      id: '1',
-      ...data,
-      hasCompletedOnboarding: false,
-    };
-
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    this.currentUserSubject.next(user);
-    return user;
+    return this.getMockUser();
   }
 
-  // Complete onboarding
+  // Complete onboarding - no validation needed for development
   async completeOnboarding(data: any): Promise<void> {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    const user = this.currentUser;
-    if (user) {
-      const updatedUser = { ...user, hasCompletedOnboarding: true };
-      localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-      this.currentUserSubject.next(updatedUser);
-    }
+    // Do nothing in development
   }
 
-  // Skip onboarding
+  // Skip onboarding - no validation needed for development
   async skipOnboarding(): Promise<void> {
-    const user = this.currentUser;
-    if (user) {
-      const updatedUser = { ...user, hasCompletedOnboarding: true };
-      localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-      this.currentUserSubject.next(updatedUser);
-    }
+    // Do nothing in development
   }
 
   logout(): void {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+    // Do nothing in development
   }
 }

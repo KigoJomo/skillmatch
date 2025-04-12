@@ -63,34 +63,41 @@
   </div>
 </section>
 
-<section class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-24">
-  <div class="">
-    <h2>Frequently Asked Questions</h2>
-    <p class="mt-4 text-[var(--color-foreground-light)]">
-      Find answers to common questions about SkillMatch platform.
-    </p>
-  </div>
+<!-- FAQ Section -->
+<section class="container mx-auto px-4 py-24">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
+    <div class="lg:sticky lg:top-24">
+      <h2 class="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+      <p class="text-foreground-light mb-6">
+        Find quick answers to common questions about SkillMatch platform
+      </p>
+      <app-button variant="primary" routerLink="/faq">
+        View All FAQs
+      </app-button>
+    </div>
 
-  <div class="space-y-4">
-    @for (faq of faqs; track faq.question) {
-    <div class="border border-foreground-light/30 rounded-lg">
-      <button (click)="toggleFaq(faq)" class="w-full px-6 py-4 text-left flex items-center justify-between"
-        [attr.aria-expanded]="faq.isOpen">
-        <span class="font-medium">{{ faq.question }}</span>
-        <span class="transform transition-transform" [class.rotate-180]="faq.isOpen">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </span>
-      </button>
-
-      @if (faq.isOpen) {
-      <div class="px-6 pb-4 text-[var(--color-foreground-light)]">
-        {{ faq.answer }}
+    <div class="space-y-4">
+      @for (faq of faqs; track faq.question) {
+      <div class="rounded-lg border border-foreground-light/20 bg-background-light/30 overflow-hidden">
+        <button (click)="toggleFaq(faq)"
+          class="w-full px-5 py-4 text-left flex items-center justify-between hover:bg-background-light/50"
+          [attr.aria-expanded]="faq.isOpen">
+          <span class="font-medium">{{ faq.question }}</span>
+          <span class="transform transition-transform duration-200 text-foreground-light"
+            [class.rotate-180]="faq.isOpen">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </button>
+        @if (faq.isOpen) {
+        <div class="px-5 py-4 text-foreground-light border-t border-foreground-light/10 animate-fade-in-down">
+          {{ faq.answer }}
+        </div>
+        }
       </div>
       }
     </div>
-    }
   </div>
 </section>
