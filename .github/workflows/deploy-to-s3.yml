@@ -36,5 +36,5 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync ${{ secrets.DIST_FOLDER }}/browser/ s3://${{ secrets.S3_BUCKET_NAME }}/ --delete
-          echo "Angular app deployed from ${{ secrets.DIST_FOLDER }}/browser/ to S3://${{ secrets.S3_BUCKET_NAME }} 😎🤏"
+          aws s3 sync ${{ secrets.DIST_FOLDER }}/ s3://${{ secrets.S3_BUCKET_NAME }}/ --delete
+          echo "Angular app deployed from ${{ secrets.DIST_FOLDER }}/ to S3://${{ secrets.S3_BUCKET_NAME }} 😎🤏"
