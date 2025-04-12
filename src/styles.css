@@ -7,7 +7,7 @@
   --color-foreground-light: #a6a6a6;
 
   --color-background: #080F17;
-  --color-background-light: #1e1e1e;
+  --color-background-light: #171d30;
 
   --color-accent: #A7EE43;
 }
@@ -52,6 +52,10 @@ strong {
   font-weight: medium;
 }
 
+input[type='checkbox']:checked{
+  accent-color: var(--color-accent)
+}
+
 input[type='checkbox']:not(:checked) {
   background-color: transparent;
 }
@@ -72,6 +76,7 @@ html {
     height: 100dvh;
     overflow-x: hidden;
     overflow-y: scroll;
+    position: relative;
 
     background: var(--color-background);
     color: var(--color-foreground);

@@ -6,7 +6,7 @@
       <p class="mt-2">Enter your credentials to access your account</p>
     </div>
 
-    <form class="mt-8 space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form class="mt-8 flex flex-col gap-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="space-y-4">
         <div>
           <app-input label="Email" type="email" formControlName="email" [error]="getErrorMessage('email')"></app-input>

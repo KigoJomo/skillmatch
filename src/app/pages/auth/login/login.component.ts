@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
@@ -10,6 +10,7 @@ import {
 import { ButtonComponent } from '../../../shared/ui/button/button.component';
 import { InputComponent } from '../../../shared/ui/input/input.component';
 import { LogoComponent } from '../../../shared/ui/logo/logo.component';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -28,13 +29,23 @@ import { LogoComponent } from '../../../shared/ui/logo/logo.component';
 export class LoginComponent {
   loginForm: FormGroup;
   isLoading = false;
+  error: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       rememberMe: [false],
     });
+
+    // Redirect if already logged in
+    if (this.authService.currentUser) {
+      this.navigateAfterAuth();
+    }
   }
 
   getErrorMessage(field: string): string | undefined {
@@ -66,12 +77,31 @@ export class LoginComponent {
     }
 
     this.isLoading = true;
+    this.error = null;
+
     try {
-      // TODO: Implement authentication service call
-      console.log('Form submitted:', this.loginForm.value);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
+      await this.authService.login(
+        this.loginForm.value.email,
+        this.loginForm.value.password
+      );
+      await this.navigateAfterAuth();
+    } catch (err) {
+      this.error = 'Invalid email or password';
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  private async navigateAfterAuth() {
+    const user = this.authService.currentUser;
+    if (!user) return;
+
+    if (!user.hasCompletedOnboarding) {
+      await this.router.navigate(['/onboarding']);
+    } else if (user.role === 'Job Seeker') {
+      await this.router.navigate(['/dashboard/seeker']);
+    } else {
+      await this.router.navigate(['/dashboard/employer']);
     }
   }
 

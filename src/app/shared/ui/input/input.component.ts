@@ -37,10 +37,12 @@ type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'textarea';
         (ngModelChange)="onChange($event)"
         (blur)="onTouched()"
         [disabled]="disabled"
+        [readonly]="readonly"
         class="w-full px-4 py-2 rounded-md border bg-[var(--color-background-light)] border-[var(--color-foreground-light)]/20
                text-[var(--color-foreground)] placeholder-[var(--color-foreground-light)]/50
                focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]
-               disabled:opacity-50 disabled:cursor-not-allowed"
+               disabled:opacity-50 disabled:cursor-not-allowed
+               readonly:bg-background-light/50 readonly:cursor-default"
       />
       <textarea
         *ngIf="type === 'textarea'"
@@ -50,10 +52,12 @@ type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'textarea';
         (ngModelChange)="onChange($event)"
         (blur)="onTouched()"
         [disabled]="disabled"
+        [readonly]="readonly"
         class="w-full px-4 py-2 rounded-md border bg-[var(--color-background-light)] border-[var(--color-foreground-light)]/20
                text-[var(--color-foreground)] placeholder-[var(--color-foreground-light)]/50
                focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]
-               disabled:opacity-50 disabled:cursor-not-allowed"
+               disabled:opacity-50 disabled:cursor-not-allowed
+               readonly:bg-background-light/50 readonly:cursor-default"
       ></textarea>
       <span *ngIf="error" class="text-sm text-red-500">{{ error }}</span>
     </div>
@@ -65,6 +69,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() type: InputType = 'text';
   @Input() placeholder = '';
   @Input() error?: string;
+  @Input() readonly = false;
 
   readonly inputId = `input-${Math.random().toString(36).substr(2, 9)}`;
   value: string = '';
