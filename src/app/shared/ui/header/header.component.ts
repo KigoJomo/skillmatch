@@ -105,12 +105,10 @@ import { AuthService } from '../../services/auth.service';
       <div class="flex items-center gap-4">
         @if (!authService.currentUser) {
         <a routerLink="/register" class="cursor-pointer">
-          <app-button size="sm" variant="secondary" size="sm"
-            >Sign Up</app-button
-          >
+          <app-button size="sm" variant="secondary">Sign Up</app-button>
         </a>
         <a routerLink="/login" class="cursor-pointer">
-          <app-button size="sm" variant="primary" size="sm">Log In</app-button>
+          <app-button size="sm" variant="primary">Log In</app-button>
         </a>
         } @else {
         <a
@@ -124,11 +122,7 @@ import { AuthService } from '../../services/auth.service';
           </div>
           <span class="text-sm">{{ authService.currentUser.firstName }}</span>
         </a>
-        <app-button
-          size="sm"
-          variant="outline"
-          size="sm"
-          (click)="authService.logout()"
+        <app-button size="sm" variant="outline" (click)="authService.logout()"
           >Sign Out</app-button
         >
         }
