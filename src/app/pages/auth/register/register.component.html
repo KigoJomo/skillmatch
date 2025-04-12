@@ -7,7 +7,7 @@
     </div>
 
     <div class="flex rounded-lg p-1 bg-background-light/30 border border-foreground-light/30">
-      <button *ngFor="let role of roles" (click)="selectRole(role)"
+      <button *ngFor="let role of roles" (click)="selectedRole = role"
         [class.bg-[var(--color-accent)]]="selectedRole === role" [class.text-background]="selectedRole === role"
         class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors">
         {{ role }}
