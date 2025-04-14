@@ -65,7 +65,7 @@
               <div class="flex items-center gap-2 mb-4">
                 <app-input placeholder="Add a skill (e.g. JavaScript)" [formControl]="skillInput"
                   (keyup.enter)="addSkill()"></app-input>
-                <app-button type="button" variant="outline" (click)="addSkill()">Add</app-button>
+                <app-button type="button" variant="secondary" (click)="addSkill()">Add</app-button>
               </div>
               <div class="flex flex-wrap gap-2">
                 @for (skill of skills; track skill) {
@@ -134,11 +134,11 @@
           <!-- Navigation Buttons -->
           <div class="flex justify-between mt-8">
             @if (currentStep > 1) {
-            <app-button type="button" variant="outline" (click)="previousStep()">Back</app-button>
+            <app-button type="button" variant="secondary" (click)="previousStep()">Back</app-button>
             }
             <div class="flex-1"></div>
             @if (currentStep === 1) {
-            <app-button type="button" variant="outline" (click)="skipOnboarding()" [loading]="isSkipping"
+            <app-button type="button" variant="secondary" (click)="skipOnboarding()" [loading]="isSkipping"
               class="mr-4">Skip for Now</app-button>
             }
             <app-button type="submit" variant="primary" [loading]="isLoading">

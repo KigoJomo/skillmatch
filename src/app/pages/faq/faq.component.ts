@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ButtonComponent } from '../../shared/ui/button/button.component';
 
 interface FaqCategory {
   title: string;
@@ -14,30 +15,24 @@ interface FaqCategory {
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ButtonComponent],
   template: `
     <div class="min-h-screen bg-[var(--color-background)]">
       <div class="container mx-auto px-4 py-12 max-w-6xl">
         <!-- Hero Section -->
         <div class="text-center mb-16 animate-fade-in-down">
-          <h1 class="text-4xl font-bold mb-4">How can we help?</h1>
+          <h1 class="mb-4">How can we help?</h1>
           <p class="text-lg text-foreground-light max-w-2xl mx-auto">
             Find answers to common questions or reach out to our support team
             for assistance
           </p>
 
           <div class="mt-8 flex flex-wrap justify-center gap-4">
-            <a
-              href="mailto:support&#64;skillmatch.com"
-              class="px-6 py-3 rounded-xl bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent)]/90 transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              Contact Support
+            <a href="mailto:support&#64;skillmatch.com">
+              <app-button variant="primary"> Contact Support </app-button>
             </a>
-            <a
-              routerLink="/help"
-              class="px-6 py-3 rounded-xl border-2 border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 transition-all duration-200"
-            >
-              Visit Help Center
+            <a routerLink="/help">
+              <app-button variant="secondary"> Visit Help Center </app-button>
             </a>
           </div>
         </div>
@@ -127,17 +122,11 @@ interface FaqCategory {
             24/7 to help you with any questions or concerns.
           </p>
           <div class="flex justify-center gap-4">
-            <a
-              href="mailto:support&#64;skillmatch.com"
-              class="px-6 py-3 rounded-xl bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent)]/90 transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              Email Our Team
+            <a href="mailto:support&#64;skillmatch.com">
+              <app-button variant="primary"> Email Our Team </app-button>
             </a>
-            <a
-              routerLink="/contact"
-              class="px-6 py-3 rounded-xl border-2 border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 transition-all duration-200"
-            >
-              Visit Contact Page
+            <a routerLink="/contact">
+              <app-button variant="secondary"> Visit Contact Page </app-button>
             </a>
           </div>
         </div>

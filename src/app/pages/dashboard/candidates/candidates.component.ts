@@ -18,33 +18,16 @@ interface Candidate {
 @Component({
   selector: 'app-candidates',
   standalone: true,
-  imports: [CommonModule, DashboardLayoutComponent],
+  imports: [CommonModule, DashboardLayoutComponent, ButtonComponent],
   template: `
     <app-dashboard-layout>
-      <div class="p-6">
+      <div class="px-6">
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-semibold">Candidate Management</h2>
-          <div class="flex gap-4">
-            <select
-              class="px-3 py-2 rounded-lg bg-background-light/50 border border-foreground-light/20"
-            >
-              <option>All Candidates</option>
-              <option>New Applications</option>
-              <option>Screening</option>
-              <option>Interviewing</option>
-              <option>Offered</option>
-              <option>Rejected</option>
-            </select>
-            <button
-              class="px-4 py-2 bg-[var(--color-accent)] text-white rounded-lg hover:bg-[var(--color-accent)]/90"
-            >
-              Schedule Interviews
-            </button>
-          </div>
+          <h2 class="">Candidate Management</h2>
         </div>
 
         <!-- Candidate List -->
-        <div class="space-y-4">
+        <div class="md:px-12 flex flex-col gap-6">
           @for (candidate of candidates; track candidate.id) {
           <div
             class="p-6 rounded-xl bg-background-light/30 border border-foreground-light/20 hover:border-[var(--color-accent)] transition-colors"
@@ -58,7 +41,9 @@ interface Candidate {
                 />
                 <div>
                   <h3 class="font-medium">{{ candidate.name }}</h3>
-                  <p class="text-sm text-foreground-light">{{ candidate.role }}</p>
+                  <p class="text-sm text-foreground-light">
+                    {{ candidate.role }}
+                  </p>
                   <p class="text-sm text-foreground-light">
                     {{ candidate.experience }}
                   </p>
@@ -81,9 +66,7 @@ interface Candidate {
 
             <div class="flex flex-wrap gap-2 mb-4">
               @for (skill of candidate.skills; track skill) {
-              <span
-                class="px-2 py-1 rounded-full bg-background-light text-xs"
-              >
+              <span class="px-2 py-1 rounded-full bg-background-light text-xs">
                 {{ skill }}
               </span>
               }
@@ -96,16 +79,12 @@ interface Candidate {
                 Applied {{ candidate.appliedDate }}
               </span>
               <div class="flex gap-2">
-                <button
-                  class="px-3 py-1 text-sm rounded-lg border border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)]/10"
-                >
+                <app-button size="sm" variant="secondary">
                   View Profile
-                </button>
-                <button
-                  class="px-3 py-1 text-sm rounded-lg bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent)]/90"
-                >
+                </app-button>
+                <app-button size="sm" variant="primary">
                   Schedule Interview
-                </button>
+                </app-button>
               </div>
             </div>
           </div>
@@ -115,33 +94,19 @@ interface Candidate {
         <!-- Pagination -->
         <div class="flex justify-center mt-6">
           <div class="flex gap-2">
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-foreground-light/20 hover:border-[var(--color-accent)]"
-            >
-              <span class="sr-only">Previous</span>
-              ←
-            </button>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--color-accent)] text-white"
-            >
+            <app-button size="sm" variant="primary" class="w-8 h-8 !p-0">
               1
-            </button>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-foreground-light/20 hover:border-[var(--color-accent)]"
-            >
+            </app-button>
+            <app-button size="sm" variant="secondary" class="w-8 h-8 !p-0">
               2
-            </button>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-foreground-light/20 hover:border-[var(--color-accent)]"
-            >
+            </app-button>
+            <app-button size="sm" variant="secondary" class="w-8 h-8 !p-0">
               3
-            </button>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-foreground-light/20 hover:border-[var(--color-accent)]"
-            >
+            </app-button>
+            <app-button size="sm" variant="secondary" class="w-8 h-8 !p-0">
               <span class="sr-only">Next</span>
               →
-            </button>
+            </app-button>
           </div>
         </div>
       </div>

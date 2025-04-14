@@ -8,31 +8,19 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="p-6">
       <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">My Applications</h1>
-        <div class="flex items-center gap-4">
-          <select
-            class="px-4 py-2 rounded-lg border border-foreground-light/20 bg-background-light"
-          >
-            <option value="all">All Applications</option>
-            <option value="pending">Pending</option>
-            <option value="in-review">In Review</option>
-            <option value="interviewed">Interviewed</option>
-            <option value="offered">Offered</option>
-            <option value="rejected">Rejected</option>
-          </select>
-        </div>
+        <h2 class="">My Applications</h2>
       </div>
 
-      <div class="space-y-4">
+      <div class="md:mx-40 flex flex-col gap-4">
         @for (application of applications; track application.id) {
         <div
           class="p-6 rounded-xl bg-background-light/30 border border-foreground-light/20"
         >
           <div class="flex justify-between items-start mb-4">
             <div>
-              <h2 class="text-xl font-semibold mb-1">
+              <h4 class="!font-light mb-1">
                 {{ application.jobTitle }}
-              </h2>
+              </h4>
               <div class="flex items-center gap-4 text-foreground-light">
                 <span>{{ application.company }}</span>
                 <span>•</span>

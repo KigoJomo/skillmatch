@@ -112,7 +112,7 @@ interface JobPostingStep {
                   ></app-input>
                   <app-button
                     type="button"
-                    variant="outline"
+                    variant="secondary"
                     (click)="addSkill()"
                     >Add</app-button
                   >
@@ -272,7 +272,7 @@ interface JobPostingStep {
               @if (currentStep > 1) {
               <app-button
                 type="button"
-                variant="outline"
+                variant="secondary"
                 (click)="previousStep()"
               >
                 Back

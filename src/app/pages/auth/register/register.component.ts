@@ -24,7 +24,7 @@ import { AuthService, UserRole } from '../../../shared/services/auth.service';
 export class RegisterComponent {
   roles: UserRole[] = ['Job Seeker', 'Employer/Recruiter'];
   selectedRole: UserRole = 'Job Seeker';
-  registerForm!: FormGroup;
+  registerForm: FormGroup;
   isLoading = false;
   showTermsError = false;
   error: string | null = null;
@@ -35,12 +35,12 @@ export class RegisterComponent {
     private router: Router
   ) {
     this.registerForm = this.fb.group({
-      firstName: [''],
-      lastName: [''],
-      email: [''],
-      password: [''],
+      firstName: ['John'],
+      lastName: ['Doe'],
+      email: ['register@example.com'],
+      password: ['password'],
       companyName: [''],
-      acceptTerms: [false],
+      acceptTerms: [true],
     });
   }
 
@@ -51,6 +51,13 @@ export class RegisterComponent {
   async onSubmit() {
     this.isLoading = true;
     try {
+      await this.authService.register(
+        this.registerForm.value.firstName,
+        this.registerForm.value.lastName,
+        this.registerForm.value.email,
+        this.registerForm.value.password,
+        this.selectedRole
+      );
       await this.router.navigate(['/onboarding']);
     } finally {
       this.isLoading = false;
@@ -58,10 +65,28 @@ export class RegisterComponent {
   }
 
   async signUpWithGoogle() {
+    // For demo, we'll create a new user with a generated email
+    const randomId = Math.random().toString(36).substring(7);
+    await this.authService.register(
+      'Google',
+      'User',
+      `google${randomId}@example.com`,
+      'password',
+      this.selectedRole
+    );
     await this.router.navigate(['/onboarding']);
   }
 
   async signUpWithGithub() {
+    // For demo, we'll create a new user with a generated email
+    const randomId = Math.random().toString(36).substring(7);
+    await this.authService.register(
+      'Github',
+      'User',
+      `github${randomId}@example.com`,
+      'password',
+      this.selectedRole
+    );
     await this.router.navigate(['/onboarding']);
   }
 }

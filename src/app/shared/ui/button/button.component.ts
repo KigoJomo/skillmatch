@@ -12,16 +12,10 @@ type ButtonSize = 'sm' | 'md' | 'lg';
     <button
       [type]="type"
       [disabled]="disabled || loading"
+      [class]="getButtonClasses()"
       [class.w-full]="fullWidth"
       [class.opacity-75]="loading"
       [class.cursor-wait]="loading"
-      [ngClass]="{
-        'bg-[var(--color-accent)] text-[var(--color-background)]':
-          variant === 'primary',
-        'border border-[var(--color-foreground-light)]/30':
-          variant === 'outline'
-      }"
-      class="px-4 py-2 rounded-md font-medium transition-colors relative flex items-center justify-center"
     >
       <div
         *ngIf="loading"
@@ -53,7 +47,16 @@ type ButtonSize = 'sm' | 'md' | 'lg';
       </span>
     </button>
   `,
-  styles: [],
+  styles: [
+    `
+      :host {
+        display: inline-block;
+      }
+      :host(.block) {
+        display: block;
+      }
+    `,
+  ],
 })
 export class ButtonComponent {
   @Input() variant: ButtonVariant = 'primary';
@@ -62,33 +65,50 @@ export class ButtonComponent {
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() loading = false;
   @Input() fullWidth = false;
+  @Input() class = '';
 
-  @Input() class = ''; // Add this line to accept additional classes
+  private readonly sizeClasses: Record<ButtonSize, string> = {
+    sm: 'px-2 py-1.5 text-xs',
+    md: 'px-4 py-2 text-base',
+    lg: 'px-6 py-3 text-lg',
+  };
+
+  private readonly variantClasses: Record<ButtonVariant, string> = {
+    primary:
+      'bg-[var(--color-accent)] text-[var(--color-background)] hover:bg-[var(--color-accent)]/90 focus:ring-[var(--color-accent)]',
+    secondary:
+      'bg-[var(--color-background-light)] text-[var(--color-foreground)] hover:bg-[var(--color-background-light)]/90 focus:ring-[var(--color-background-light)]',
+    outline:
+      'border-2 border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 focus:ring-[var(--color-accent)]',
+  };
 
   getButtonClasses(): string {
-    const baseClasses =
-      'rounded-md font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer';
-    const sizeClasses = {
-      sm: 'px-3 py-1.5 text-sm',
-      md: 'px-4 py-2 text-base',
-      lg: 'px-6 py-3 text-lg',
-    };
+    const baseClasses = [
+      'rounded-md',
+      'font-medium',
+      'transition-colors',
+      'relative',
+      'flex',
+      'items-center',
+      'justify-center',
+      'focus:outline-none',
+      'focus:ring-2',
+      'focus:ring-offset-2',
+    ];
 
-    const variantClasses = {
-      primary:
-        'bg-[var(--color-accent)] text-[var(--color-background)] hover:bg-[var(--color-accent)]/90 focus:ring-[var(--color-accent)]',
-      secondary:
-        'bg-[var(--color-background-light)] text-[var(--color-foreground)] hover:bg-[var(--color-background-light)]/90 focus:ring-[var(--color-background-light)]',
-      outline:
-        'border-2 border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 focus:ring-[var(--color-accent)]',
-    };
+    if (this.disabled) {
+      baseClasses.push('opacity-50', 'cursor-not-allowed');
+    } else {
+      baseClasses.push('cursor-pointer');
+    }
 
-    const disabledClasses = this.disabled
-      ? 'opacity-50 cursor-not-allowed'
-      : '';
-
-    return `${baseClasses} ${sizeClasses[this.size]} ${
-      variantClasses[this.variant]
-    } ${disabledClasses} ${this.class}`.trim();
+    return [
+      ...baseClasses,
+      this.sizeClasses[this.size],
+      this.variantClasses[this.variant],
+      this.class,
+    ]
+      .filter(Boolean)
+      .join(' ');
   }
 }

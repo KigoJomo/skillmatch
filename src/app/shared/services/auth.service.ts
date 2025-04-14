@@ -1,75 +1,144 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 export type UserRole = 'Job Seeker' | 'Employer/Recruiter';
 
 export interface User {
-  id: string;
-  email: string;
   firstName: string;
   lastName: string;
+  email: string;
   role: UserRole;
-  companyName?: string;
-  hasCompletedOnboarding: boolean;
+  onboardingCompleted?: boolean;
+  profile?: UserProfile;
+}
+
+export interface UserProfile {
+  phone?: string;
+  location?: string;
+  bio?: string;
+  skills?: string[];
+  experienceLevel?: string;
+  jobTypes?: string[];
+  salaryExpectation?: string;
+  preferredLocation?: string;
+}
+
+interface SimulatedUser extends User {
+  password: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<User | null>(
-    this.getMockUser()
-  );
-  currentUser$ = this.currentUserSubject.asObservable();
+  currentUser: User | null = null;
 
-  constructor() {
-    // Always have a mock user for development
-    this.currentUserSubject.next(this.getMockUser());
-  }
-
-  get currentUser(): User | null {
-    return this.getMockUser();
-  }
-
-  private getMockUser(): User {
-    return {
-      id: '1',
-      email: 'dev@example.com',
+  // Simulated user database
+  private readonly mockUsers: SimulatedUser[] = [
+    {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'seeker@example.com',
+      password: 'password',
+      role: 'Job Seeker',
+      onboardingCompleted: false,
+    },
+    {
+      firstName: 'Jane',
+      lastName: 'Smith',
+      email: 'employer@example.com',
+      password: 'password',
+      role: 'Employer/Recruiter',
+      onboardingCompleted: false,
+    },
+    {
       firstName: 'Dev',
       lastName: 'User',
+      email: 'dev@example.com',
+      password: 'password',
       role: 'Job Seeker',
-      hasCompletedOnboarding: true,
+      onboardingCompleted: false,
+    },
+  ];
+
+  constructor(private router: Router) {
+    // Try to restore user from localStorage
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+      this.currentUser = JSON.parse(savedUser);
+    }
+  }
+
+  async login(email: string, password: string) {
+    // Simulate API call to find user
+    const user = this.mockUsers.find(
+      (u) => u.email === email && u.password === password
+    );
+
+    if (!user) {
+      throw new Error('Invalid credentials');
+    }
+
+    // Create a new user object without the password
+    this.currentUser = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+      onboardingCompleted: user.onboardingCompleted,
+      profile: user.profile,
     };
+
+    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
   }
 
-  // Simulate login - no validation needed for development
-  async login(email: string, password: string): Promise<User> {
-    return this.getMockUser();
+  async register(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    role: UserRole
+  ) {
+    // In a real app, this would make an API call to create the user
+    const newUser: SimulatedUser = {
+      firstName,
+      lastName,
+      email,
+      password,
+      role,
+      onboardingCompleted: false,
+    };
+
+    // In development, we'll just log in the user directly
+    this.currentUser = {
+      firstName,
+      lastName,
+      email,
+      role,
+      onboardingCompleted: false,
+    };
+
+    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
   }
 
-  // Simulate registration - no validation needed for development
-  async register(data: {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    role: UserRole;
-    companyName?: string;
-  }): Promise<User> {
-    return this.getMockUser();
+  async logout() {
+    this.currentUser = null;
+    localStorage.removeItem('currentUser');
+    await this.router.navigate(['/']);
   }
 
-  // Complete onboarding - no validation needed for development
-  async completeOnboarding(data: any): Promise<void> {
-    // Do nothing in development
+  async skipOnboarding() {
+    if (this.currentUser) {
+      this.currentUser.onboardingCompleted = true;
+      localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    }
   }
 
-  // Skip onboarding - no validation needed for development
-  async skipOnboarding(): Promise<void> {
-    // Do nothing in development
-  }
-
-  logout(): void {
-    // Do nothing in development
+  async completeOnboarding(profileData: UserProfile) {
+    if (this.currentUser) {
+      this.currentUser.onboardingCompleted = true;
+      this.currentUser.profile = profileData;
+      localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    }
   }
 }

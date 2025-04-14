@@ -1,37 +1,27 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../../shared/ui/button/button.component';
+import { InputComponent } from '../../../shared/ui/input/input.component';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-jobs',
   standalone: true,
-  imports: [CommonModule, ButtonComponent],
+  imports: [CommonModule, ButtonComponent, ReactiveFormsModule],
   template: `
     <div class="p-6">
       <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Available Jobs</h1>
-        <div class="flex gap-4">
-          <input
-            type="text"
-            placeholder="Search jobs..."
-            class="px-4 py-2 rounded-lg border border-foreground-light/20 bg-background-light"
-          />
-          <button
-            class="px-4 py-2 rounded-lg bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent)]/90"
-          >
-            Search
-          </button>
-        </div>
+        <h2 class="">Available Jobs</h2>
       </div>
 
-      <div class="space-y-4">
+      <div class="md:mx-40 flex flex-col gap-4">
         <div
           *ngFor="let job of jobs; trackBy: trackByJobId"
           class="p-6 rounded-xl bg-background-light/30 border border-foreground-light/20"
         >
           <div class="flex justify-between items-start mb-4">
             <div>
-              <h2 class="text-xl font-semibold mb-1">{{ job.title }}</h2>
+              <h4 class="!font-light mb-1">{{ job.title }}</h4>
               <div class="flex items-center gap-4 text-foreground-light">
                 <span>{{ job.company }}</span>
                 <span>•</span>
@@ -41,7 +31,7 @@ import { ButtonComponent } from '../../../shared/ui/button/button.component';
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-[var(--color-accent)]"
+              <span class="text-[var(--color-accent)] text-sm"
                 >{{ job.matchPercentage }}% Match</span
               >
               <app-button size="sm">Apply Now</app-button>
@@ -62,6 +52,13 @@ import { ButtonComponent } from '../../../shared/ui/button/button.component';
   `,
 })
 export class JobsComponent {
+  searchControl = new FormControl('');
+
+  searchJobs() {
+    // TODO: Implement search functionality
+    console.log('Searching for:', this.searchControl.value);
+  }
+
   jobs = [
     {
       id: 1,

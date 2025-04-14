@@ -153,7 +153,7 @@ interface OnboardingStep {
                     ></app-input>
                     <app-button
                       type="button"
-                      variant="outline"
+                      variant="secondary"
                       (click)="addSkill()"
                       >Add</app-button
                     >
@@ -164,13 +164,15 @@ interface OnboardingStep {
                       class="flex items-center gap-2 px-3 py-1 rounded-full bg-background-light/30 border border-foreground-light/30"
                     >
                       <span>{{ skill }}</span>
-                      <button
+                      <app-button
                         type="button"
+                        size="sm"
+                        variant="secondary"
                         (click)="removeSkill(skill)"
-                        class="text-foreground-light hover:text-foreground"
+                        class="!p-0 !border-0 !bg-transparent hover:!text-foreground"
                       >
                         ×
-                      </button>
+                      </app-button>
                     </div>
                     }
                   </div>
@@ -262,7 +264,7 @@ interface OnboardingStep {
                 @if (currentStep > 1) {
                 <app-button
                   type="button"
-                  variant="outline"
+                  variant="secondary"
                   (click)="previousStep()"
                   >Back</app-button
                 >
@@ -271,7 +273,7 @@ interface OnboardingStep {
                 @if (currentStep === 1) {
                 <app-button
                   type="button"
-                  variant="outline"
+                  variant="secondary"
                   (click)="skipOnboarding()"
                   [loading]="isSkipping"
                   class="mr-4"
@@ -392,11 +394,28 @@ export class RecruiterOnboardingComponent {
   }
 
   private async completeOnboarding() {
-    await this.navigateToDashboard();
+    this.isLoading = true;
+    try {
+      const onboardingData = {
+        ...this.onboardingForm.value,
+        skills: this.skills,
+        experienceLevel: this.selectedExperience,
+        jobTypes: this.selectedJobTypes,
+      };
+
+      await this.authService.completeOnboarding(onboardingData);
+      await this.navigateToDashboard();
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   private async navigateToDashboard() {
-    await this.router.navigate(['/dashboard/employer']);
+    const role =
+      this.authService.currentUser?.role === 'Job Seeker'
+        ? 'seeker'
+        : 'employer';
+    await this.router.navigate([`/dashboard/${role}`]);
   }
 
   uploadLogo() {

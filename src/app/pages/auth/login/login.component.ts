@@ -32,9 +32,9 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: [''],
-      password: [''],
-      rememberMe: [false],
+      email: ['seeker@example.com'],
+      password: ['password'],
+      rememberMe: [true],
     });
   }
 
@@ -42,21 +42,36 @@ export class LoginComponent {
     return undefined; // No validation in development
   }
 
+  private async navigateToDashboard() {
+    const dashboardType =
+      this.authService.currentUser?.role === 'Job Seeker'
+        ? 'seeker'
+        : 'employer';
+    await this.router.navigate([`/dashboard/${dashboardType}`]);
+  }
+
   async onSubmit() {
     this.isLoading = true;
     try {
-      await this.authService.login('dev@example.com', 'password');
-      await this.router.navigate(['/dashboard/seeker']);
+      await this.authService.login(
+        this.loginForm.value.email,
+        this.loginForm.value.password
+      );
+      await this.navigateToDashboard();
+    } catch (error) {
+      this.error = 'Invalid email or password';
     } finally {
       this.isLoading = false;
     }
   }
 
   async signInWithGoogle() {
-    await this.router.navigate(['/dashboard/seeker']);
+    await this.authService.login('dev@example.com', 'password');
+    await this.navigateToDashboard();
   }
 
   async signInWithGithub() {
-    await this.router.navigate(['/dashboard/seeker']);
+    await this.authService.login('dev@example.com', 'password');
+    await this.navigateToDashboard();
   }
 }

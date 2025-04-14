@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { LogoComponent } from '../logo/logo.component';
 import { ButtonComponent } from '../button/button.component';
 import { AuthService, UserRole } from '../../services/auth.service';
+import { ThemeService, Theme } from '../../services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -33,6 +34,9 @@ import { AuthService, UserRole } from '../../services/auth.service';
               <a routerLink="/faq" class="hover:text-[var(--color-accent)]"
                 >FAQ</a
               >
+              <a routerLink="/contact" class="hover:text-[var(--color-accent)]"
+                >Contact</a
+              >
             </ng-container>
 
             <ng-template #loggedInNav>
@@ -43,7 +47,7 @@ import { AuthService, UserRole } from '../../services/auth.service';
                 "
               >
                 <a
-                  routerLink="/dashboard/seeker/overview"
+                  routerLink="/dashboard/seeker"
                   routerLinkActive="text-[var(--color-accent)]"
                   class="hover:text-[var(--color-accent)]"
                   >Dashboard</a
@@ -60,16 +64,10 @@ import { AuthService, UserRole } from '../../services/auth.service';
                   class="hover:text-[var(--color-accent)]"
                   >Applications</a
                 >
-                <a
-                  routerLink="/dashboard/seeker/career"
-                  routerLinkActive="text-[var(--color-accent)]"
-                  class="hover:text-[var(--color-accent)]"
-                  >Career</a
-                >
               </ng-container>
               <ng-template #employerNav>
                 <a
-                  routerLink="/dashboard/employer/overview"
+                  routerLink="/dashboard/employer"
                   routerLinkActive="text-[var(--color-accent)]"
                   class="hover:text-[var(--color-accent)]"
                   >Dashboard</a
@@ -86,19 +84,65 @@ import { AuthService, UserRole } from '../../services/auth.service';
                   class="hover:text-[var(--color-accent)]"
                   >Candidates</a
                 >
+                <a
+                  routerLink="/dashboard/employer/ai-chat"
+                  routerLinkActive="text-[var(--color-accent)]"
+                  class="hover:text-[var(--color-accent)]"
+                  >AI Chat</a
+                >
               </ng-template>
-              <a
-                routerLink="/dashboard/messages"
-                routerLinkActive="text-[var(--color-accent)]"
-                class="hover:text-[var(--color-accent)]"
-                >Messages</a
-              >
             </ng-template>
           </nav>
         </div>
 
         <!-- Auth Buttons/Profile -->
         <div class="flex items-center gap-4">
+          <!-- Theme Toggle Button -->
+          <button
+            (click)="toggleTheme()"
+            class="flex items-center justify-center w-8 h-8 rounded-full bg-background-light/30 text-foreground hover:text-[var(--color-accent)] transition-colors"
+            aria-label="Toggle theme"
+          >
+            <!-- Sun icon for dark mode (shown when in dark mode to switch to light) -->
+            <svg
+              *ngIf="currentTheme === 'dark'"
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <!-- Moon icon for light mode (shown when in light mode to switch to dark) -->
+            <svg
+              *ngIf="currentTheme === 'light'"
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+
           <ng-container *ngIf="!authService.currentUser; else profileMenu">
             <a routerLink="/register">
               <app-button size="sm" variant="secondary">Sign Up</app-button>
@@ -123,7 +167,7 @@ import { AuthService, UserRole } from '../../services/auth.service';
                   authService.currentUser?.firstName
                 }}</span>
               </a>
-              <app-button size="sm" variant="outline" (click)="logout()"
+              <app-button size="sm" variant="secondary" (click)="logout()"
                 >Sign Out</app-button
               >
             </div>
@@ -134,7 +178,17 @@ import { AuthService, UserRole } from '../../services/auth.service';
   `,
 })
 export class HeaderComponent {
-  constructor(public authService: AuthService) {}
+  currentTheme: Theme;
+
+  constructor(
+    public authService: AuthService,
+    private themeService: ThemeService
+  ) {
+    this.currentTheme = this.themeService.getCurrentTheme();
+    this.themeService.currentTheme$.subscribe((theme) => {
+      this.currentTheme = theme;
+    });
+  }
 
   getDashboardRoute(): string {
     return this.authService.currentUser?.role === 'Job Seeker'
@@ -146,7 +200,11 @@ export class HeaderComponent {
     return this.authService.currentUser?.firstName?.charAt(0) ?? '';
   }
 
-  logout() {
-    this.authService.logout();
+  async logout() {
+    await this.authService.logout();
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 }

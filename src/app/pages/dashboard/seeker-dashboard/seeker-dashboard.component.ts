@@ -9,189 +9,164 @@ import { DashboardLayoutComponent } from '../dashboard-layout/dashboard-layout.c
   imports: [CommonModule, RouterModule, DashboardLayoutComponent],
   template: `
     <app-dashboard-layout>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-        <!-- Profile Snapshot -->
-        <div
-          class="p-6 rounded-xl bg-background-light/30 border border-foreground-light/20"
-        >
-          <div class="flex items-center gap-4 mb-4">
-            <img
-              src="/images/profile-placeholder.jpeg"
-              alt="Profile"
-              class="w-16 h-16 rounded-full object-cover"
-            />
-            <div>
-              <h4 class="text-lg font-medium">John Doe</h4>
-              <p class="text-sm text-foreground-light">
-                Senior Frontend Developer
-              </p>
+      <div class="w-full flex flex-col">
+        <div class="md:mx-20 px-20 pb-40 border-x border-background-light">
+          <!-- Profile Header with Skyline -->
+          <div class="relative">
+            <div
+              class="h-64 bg-gradient-to-r from-indigo-900 to-purple-900 overflow-hidden rounded-2xl"
+            >
+              <img
+                src="/images/skyline.jpeg"
+                alt="City skyline"
+                class="w-full h-full object-cover opacity-100 z-[8]"
+              />
             </div>
-          </div>
-          <div class="space-y-2">
-            <div class="flex flex-wrap gap-2">
-              <span class="px-2 py-1 rounded-full bg-background-light text-xs"
-                >React</span
-              >
-              <span class="px-2 py-1 rounded-full bg-background-light text-xs"
-                >TypeScript</span
-              >
-              <span class="px-2 py-1 rounded-full bg-background-light text-xs"
-                >Node.js</span
-              >
-              <span
-                class="px-2 py-1 rounded-full bg-[var(--color-accent)]/20 text-[var(--color-accent)] text-xs"
-                >+5 more</span
-              >
-            </div>
-            <div class="flex items-center gap-2 text-sm text-foreground-light">
-              <span>5 years experience</span>
-              <span>•</span>
-              <span>Remote preferred</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div
-          class="p-6 rounded-xl bg-background-light/30 border border-foreground-light/20"
-        >
-          <h4 class="text-lg mb-4">Quick Actions</h4>
-          <div class="grid grid-cols-2 gap-4">
-            <a
-              routerLink="/dashboard/seeker/profile"
-              class="p-4 rounded-lg bg-background-light/50 border border-foreground-light/20 text-left hover:border-[var(--color-accent)] transition-colors"
-            >
-              <h5 class="font-medium mb-1">Update Profile</h5>
-              <p class="text-xs text-foreground-light">
-                Keep your profile current
-              </p>
-            </a>
-            <a
-              routerLink="/dashboard/seeker/cv"
-              class="p-4 rounded-lg bg-background-light/50 border border-foreground-light/20 text-left hover:border-[var(--color-accent)] transition-colors"
-            >
-              <h5 class="font-medium mb-1">Upload CV</h5>
-              <p class="text-xs text-foreground-light">Add or update your CV</p>
-            </a>
-            <a
-              routerLink="/dashboard/seeker/matches"
-              class="p-4 rounded-lg bg-background-light/50 border border-foreground-light/20 text-left hover:border-[var(--color-accent)] transition-colors"
-            >
-              <h5 class="font-medium mb-1">View Matches</h5>
-              <p class="text-xs text-foreground-light">See your job matches</p>
-            </a>
-            <a
-              routerLink="/dashboard/seeker/career"
-              class="p-4 rounded-lg bg-background-light/50 border border-foreground-light/20 text-left hover:border-[var(--color-accent)] transition-colors"
-            >
-              <h5 class="font-medium mb-1">Career Path</h5>
-              <p class="text-xs text-foreground-light">Explore opportunities</p>
-            </a>
-          </div>
-        </div>
-
-        <!-- Notifications -->
-        <div
-          class="p-6 rounded-xl bg-background-light/30 border border-foreground-light/20"
-        >
-          <h4 class="text-lg mb-4">Notifications</h4>
-          <div class="space-y-4">
-            <div class="flex items-start gap-3">
+            <div class="flex flex-col items-center -mt-12">
+              <div class="rounded-full border-4 border-background">
+                <img
+                  src="/images/profile-placeholder.jpeg"
+                  alt="Profile"
+                  class="w-24 h-24 rounded-full object-cover z-10"
+                />
+              </div>
+              <h3 class="font-semibold">John Doe</h3>
               <div
-                class="w-2 h-2 mt-2 rounded-full bg-[var(--color-accent)]"
-              ></div>
-              <div>
-                <p class="text-sm">Interview scheduled with TechCorp Inc.</p>
-                <span class="text-xs text-foreground-light"
-                  >Today, 2:00 PM</span
+                class="flex items-center gap-4 text-sm text-foreground-light mt-1"
+              >
+                <span>job-seeker&#64;gmail.com</span>
+              </div>
+            </div>
+          </div>
+          <div class="px-6 mt-8">
+            <h4 class="mb-4">Application Status Overview</h4>
+            <!-- Application Status Cards -->
+            <div class="grid grid-cols-4 gap-4 mb-8">
+              <div class="p-4 rounded-2xl bg-background-light/20 border-2 border-foreground-light/30 text-center">
+                <div class="flex justify-between items-center mb-1">
+                  <h5 class="text-sm text-foreground-light">Applied</h5>
+                  <button class="text-foreground-light/60">...</button>
+                </div>
+                <p class="text-2xl !text-accent font-semibold">15</p>
+                <p class="text-xs text-foreground-light">+23%</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-background-light/20 border-2 border-foreground-light/30 text-center">
+                <div class="flex justify-between items-center mb-1">
+                  <h5 class="text-sm text-foreground-light">Interview Scheduled</h5>
+                  <button class="text-foreground-light/60">...</button>
+                </div>
+                <p class="text-2xl !text-accent font-semibold">3</p>
+                <p class="text-xs text-foreground-light">+7%</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-background-light/20 border-2 border-foreground-light/30 text-center">
+                <div class="flex justify-between items-center mb-1">
+                  <h5 class="text-sm text-foreground-light">Offers</h5>
+                  <button class="text-foreground-light/60">...</button>
+                </div>
+                <p class="text-2xl !text-accent font-semibold">1</p>
+                <p class="text-xs text-foreground-light">+0%</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-background-light/20 border-2 border-foreground-light/30 text-center">
+                <div class="flex justify-between items-center mb-1">
+                  <h5 class="text-sm text-foreground-light">Rejected</h5>
+                  <button class="text-foreground-light/60">...</button>
+                </div>
+                <p class="text-2xl !text-accent font-semibold">6</p>
+                <p class="text-xs text-foreground-light">+2%</p>
+              </div>
+            </div>
+            <h3 class="text-lg mb-3">Skills Development Progress</h3>
+            <!-- Skills Development and Certifications Cards -->
+            <div class="grid grid-cols-2 gap-6">
+              <!-- Skill Growth Card -->
+              <div
+                class="p-6 rounded-xl bg-background-light/20 border border-foreground-light/10"
+              >
+                <div class="flex items-center justify-between mb-4">
+                  <h4 class="font-medium">Skill Growth</h4>
+                  <div class="flex items-center gap-2">
+                    <span class="text-lg font-bold">80%</span>
+                    <button class="text-foreground-light/60">...</button>
+                  </div>
+                </div>
+                <div class="h-40 relative">
+                  <!-- This is a placeholder for the line chart -->
+                  <svg
+                    class="w-full h-full"
+                    viewBox="0 0 300 100"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M0,80 C20,70 40,90 60,75 C80,60 100,50 120,55 C140,60 160,40 180,45 C200,50 220,40 240,45 C260,50 280,40 300,35"
+                      stroke="#4ade80"
+                      stroke-width="2"
+                      fill="none"
+                    />
+                    <path
+                      d="M0,80 C20,70 40,90 60,75 C80,60 100,50 120,55 C140,60 160,40 180,45 C200,50 220,40 240,45 C260,50 280,40 300,35 L300,100 L0,100 Z"
+                      fill="#4ade80"
+                      fill-opacity="0.1"
+                    />
+                  </svg>
+                  <!-- Week labels -->
+                  <div
+                    class="flex justify-between mt-2 text-xs text-foreground-light"
+                  >
+                    <span>Week 1</span>
+                    <span>Week 2</span>
+                    <span>Week 3</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Certifications Card -->
+              <div
+                class="p-6 rounded-xl bg-background-light/20 border border-foreground-light/10"
+              >
+                <div class="flex items-center justify-between mb-4">
+                  <h4 class="font-medium">Certifications</h4>
+                  <div class="flex items-center gap-2">
+                    <span class="text-lg font-bold">40%</span>
+                    <button class="text-foreground-light/60">...</button>
+                  </div>
+                </div>
+                <div class="h-40 flex items-end justify-between">
+                  <!-- Bar chart for monthly progress -->
+                  <div class="flex-1 flex items-end h-full">
+                    <div class="flex items-end justify-between gap-4 w-full h-5/6">
+                      <div class="w-12 h-[20%] bg-[#4ade80] rounded-t"></div>
+                      <div class="w-12 h-[30%] bg-[#4ade80] rounded-t"></div>
+                      <div class="w-12 h-[45%] bg-[#4ade80] rounded-t"></div>
+                      <div class="w-12 h-[65%] bg-[#4ade80] rounded-t"></div>
+                      <div class="w-12 h-[60%] bg-[#4ade80] rounded-t"></div>
+                      <div class="w-12 h-[75%] bg-[#4ade80] rounded-t"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Month labels -->
+                <div
+                  class="flex items-end justify-between gap-4 w-full mt-2 text-xs text-foreground-light"
                 >
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <div
-                class="w-2 h-2 mt-2 rounded-full bg-[var(--color-accent)]"
-              ></div>
-              <div>
-                <p class="text-sm">New job match: Senior Frontend Developer</p>
-                <span class="text-xs text-foreground-light">2 hours ago</span>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <div
-                class="w-2 h-2 mt-2 rounded-full bg-[var(--color-accent)]"
-              ></div>
-              <div>
-                <p class="text-sm">Application viewed by InnovateHub</p>
-                <span class="text-xs text-foreground-light">Yesterday</span>
+                  <span>October</span>
+                  <span>May</span>
+                  <span>January</span>
+                  <span>February</span>
+                  <span>July</span>
+                  <span>August</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Application Progress -->
-        <div
-          class="md:col-span-2 p-6 rounded-xl bg-background-light/30 border border-foreground-light/20"
-        >
-          <h4 class="text-lg mb-4">Application Progress</h4>
-          <div class="grid grid-cols-4 gap-4">
-            <div class="p-4 rounded-lg bg-background-light/50 text-center">
-              <span class="text-2xl font-bold block">12</span>
-              <span class="text-sm text-foreground-light">Total Applied</span>
-            </div>
-            <div class="p-4 rounded-lg bg-background-light/50 text-center">
-              <span class="text-2xl font-bold text-blue-400 block">5</span>
-              <span class="text-sm text-foreground-light">In Review</span>
-            </div>
-            <div class="p-4 rounded-lg bg-background-light/50 text-center">
-              <span class="text-2xl font-bold text-[var(--color-accent)] block"
-                >3</span
-              >
-              <span class="text-sm text-foreground-light">Interviews</span>
-            </div>
-            <div class="p-4 rounded-lg bg-background-light/50 text-center">
-              <span class="text-2xl font-bold text-green-500 block">2</span>
-              <span class="text-sm text-foreground-light">Offers</span>
-            </div>
-          </div>
-          <div class="mt-6">
-            <div class="h-2 bg-background-light rounded-full overflow-hidden">
-              <div class="h-full w-[60%] bg-[var(--color-accent)]"></div>
-            </div>
-            <p class="text-sm text-foreground-light mt-2">
-              60% success rate in reaching interview stage
-            </p>
-          </div>
-        </div>
-
-        <!-- Recent Activity -->
-        <div
-          class="p-6 rounded-xl bg-background-light/30 border border-foreground-light/20"
-        >
-          <h4 class="text-lg mb-4">Recent Activity</h4>
-          <div class="space-y-4">
-            <div class="text-sm">
-              <p class="font-medium">Profile viewed by 3 recruiters</p>
-              <p class="text-xs text-foreground-light">Last 7 days</p>
-            </div>
-            <div class="text-sm">
-              <p class="font-medium">Skills endorsed: React, TypeScript</p>
-              <p class="text-xs text-foreground-light">By John Smith</p>
-            </div>
-            <div class="text-sm">
-              <p class="font-medium">Learning path progress: 60%</p>
-              <p class="text-xs text-foreground-light">
-                System Design Fundamentals
-              </p>
-            </div>
-          </div>
-          <button
-            class="w-full mt-4 px-4 py-2 text-sm text-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 rounded-lg transition-colors"
-          >
-            View All Activity
-          </button>
         </div>
       </div>
     </app-dashboard-layout>
   `,
+  styles: [
+    `
+      :host {
+        --chart-color: #4ade80;
+        --bar-color: #22c55e;
+      }
+    `,
+  ],
 })
 export class SeekerDashboardComponent {}

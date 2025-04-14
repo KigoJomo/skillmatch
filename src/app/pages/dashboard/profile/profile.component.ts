@@ -63,7 +63,7 @@ import { AuthService } from '../../../shared/services/auth.service';
                 <p class="text-foreground-light">Senior Frontend Developer</p>
               </div>
             </div>
-            <app-button variant="outline" (click)="toggleEdit()">{{
+            <app-button variant="secondary" (click)="toggleEdit()">{{
               isEditing ? 'Cancel' : 'Edit Profile'
             }}</app-button>
           </div>
@@ -126,7 +126,10 @@ import { AuthService } from '../../../shared/services/auth.service';
 
             @if (isEditing) {
             <div class="flex justify-end gap-4">
-              <app-button type="button" variant="outline" (click)="toggleEdit()"
+              <app-button
+                type="button"
+                variant="secondary"
+                (click)="toggleEdit()"
                 >Cancel</app-button
               >
               <app-button type="submit" variant="primary" [loading]="isSaving"
@@ -144,8 +147,8 @@ import { AuthService } from '../../../shared/services/auth.service';
             class="p-6 rounded-xl bg-background-light/30 border border-foreground-light/20"
           >
             <div class="flex justify-between items-center mb-6">
-              <h2 class="text-xl font-medium">Skills & Expertise</h2>
-              <app-button variant="outline" (click)="toggleSkillEdit()">
+              <h3 class="">Skills & Expertise</h3>
+              <app-button variant="secondary" (click)="toggleSkillEdit()">
                 {{ isEditingSkills ? 'Done' : 'Manage Skills' }}
               </app-button>
             </div>
@@ -158,7 +161,10 @@ import { AuthService } from '../../../shared/services/auth.service';
                   placeholder="Add a skill (e.g. JavaScript)"
                   (keyup.enter)="addSkill()"
                 ></app-input>
-                <app-button type="button" variant="outline" (click)="addSkill()"
+                <app-button
+                  type="button"
+                  variant="secondary"
+                  (click)="addSkill()"
                   >Add</app-button
                 >
               </div>
@@ -195,8 +201,8 @@ import { AuthService } from '../../../shared/services/auth.service';
             class="p-6 rounded-xl bg-background-light/30 border border-foreground-light/20"
           >
             <div class="flex justify-between items-center mb-6">
-              <h2 class="text-xl font-medium">Portfolio Projects</h2>
-              <app-button variant="outline" (click)="toggleProjectEdit()">
+              <h3 class="">Portfolio Projects</h3>
+              <app-button variant="secondary" (click)="toggleProjectEdit()">
                 {{ isEditingProjects ? 'Done' : 'Add Project' }}
               </app-button>
             </div>
@@ -239,7 +245,12 @@ import { AuthService } from '../../../shared/services/auth.service';
                 class="p-4 rounded-lg bg-background-light/50 border border-foreground-light/20"
               >
                 <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-medium">{{ project.name }}</h3>
+                  <div class="flex items-center gap-2">
+                    <div
+                      class="w-2 aspect-square rounded-full bg-accent/60 shrink-0"
+                    ></div>
+                    <h4 class="!font-light">{{ project.name }}</h4>
+                  </div>
                   @if (isEditingProjects) {
                   <button
                     type="button"
@@ -278,7 +289,7 @@ import { AuthService } from '../../../shared/services/auth.service';
           >
             <div class="flex justify-between items-center mb-6">
               <h2 class="text-xl font-medium">Company Information</h2>
-              <app-button variant="outline" (click)="toggleCompanyEdit()">
+              <app-button variant="secondary" (click)="toggleCompanyEdit()">
                 {{ isEditingCompany ? 'Done' : 'Edit' }}
               </app-button>
             </div>

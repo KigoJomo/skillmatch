@@ -21,13 +21,6 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'messages',
-        loadComponent: () =>
-          import('./pages/dashboard/messages/messages.component').then(
-            (m) => m.MessagesComponent
-          ),
-      },
-      {
         path: 'seeker',
         children: [
           {
@@ -66,6 +59,13 @@ export const routes: Routes = [
             component: ProfileComponent,
           },
           {
+            path: 'jobs',
+            loadComponent: () =>
+              import(
+                './pages/dashboard/employer-dashboard/job-postings.component'
+              ).then((m) => m.JobPostingsComponent),
+          },
+          {
             path: 'candidates',
             loadComponent: () =>
               import('./pages/dashboard/candidates/candidates.component').then(
@@ -78,6 +78,13 @@ export const routes: Routes = [
               import(
                 './pages/dashboard/job-posting/job-posting.component'
               ).then((m) => m.JobPostingComponent),
+          },
+          {
+            path: 'ai-chat',
+            loadComponent: () =>
+              import('./pages/dashboard/ai-chat/ai-chat.component').then(
+                (c) => c.AIChatComponent
+              ),
           },
         ],
       },
@@ -98,13 +105,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/contact/contact.component').then(
         (m) => m.ContactComponent
-      ),
-  },
-  {
-    path: 'privacy',
-    loadComponent: () =>
-      import('./pages/privacy/privacy.component').then(
-        (m) => m.PrivacyComponent
       ),
   },
   {

@@ -57,6 +57,12 @@ p {
   color: var(--color-foreground-light);
 }
 
+a,
+a button,
+button {
+  cursor: pointer !important;
+}
+
 strong {
   color: var(--foreground);
   font-weight: medium;
@@ -262,4 +268,11 @@ html {
 
 .animate-on-scroll.is-visible {
   opacity: 1;
+}
+
+/* Add dark theme backgrounds for dashboard charts */
+.dashboard-chart-bg {
+  background-color: rgba(30, 41, 59, 0.2);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 12px;
 }

@@ -6,6 +6,11 @@
       <p class="mt-2">Enter your credentials to access your account</p>
     </div>
 
+    <div class="p-4 bg-accent/10 rounded-2xl text-xs flex items-center gap-2">
+      <strong class="!text-foreground-light">Dev:</strong>
+      <p>Use <span class="!text-foreground">employer&#64;example.com</span> to view the employer dashboard</p>
+    </div>
+
     <form class="mt-8 flex flex-col gap-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="space-y-4">
         <div>
@@ -31,7 +36,7 @@
       </div>
 
       <div class="space-y-4">
-        <app-button type="submit" variant="primary" [fullWidth]="true" [loading]="isLoading">
+        <app-button type="submit" variant="primary" [fullWidth]="true" class="w-full" [loading]="isLoading">
           Sign In
         </app-button>
 
@@ -45,14 +50,14 @@
         </div>
 
         <div class="w-full grid grid-cols-1 gap-4">
-          <app-button variant="outline" type="button" (click)="signInWithGoogle()" class="*:w-full">
-            <div class="w-full flex items-center gap-4">
+          <app-button variant="secondary" type="button" (click)="signInWithGoogle()" class="*:w-full">
+            <div class="w-full flex items-center justify-center gap-4">
               <img src="/images/google.png" alt="" class="w-6">
               <span>Google</span>
             </div>
           </app-button>
-          <app-button variant="outline" type="button" (click)="signInWithGithub()" class="*:w-full">
-            <div class="w-full flex items-center gap-4">
+          <app-button variant="secondary" type="button" (click)="signInWithGithub()" class="*:w-full">
+            <div class="w-full flex items-center justify-center gap-4">
               <img src="/images/github.png" alt="" class="w-6">
               <span>GitHub</span>
             </div>
